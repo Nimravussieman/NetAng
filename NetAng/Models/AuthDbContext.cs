@@ -79,7 +79,7 @@ namespace NetAng.Models
             //    modelBuilder.ApplyConfiguration(new MyEntityDbConfiguration());            //modelBuilder.Entity<CompanyFieldsPermissions>().Property(c => c.IsPublic).HasDefaultValue(true);
             ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-            modelBuilder.Entity<ApplicationUser>().HasOne(u => u.Account).WithMany().HasForeignKey(a=>a.Id);
+            //modelBuilder.Entity<ApplicationUser>().HasOne(u => u.Account).WithMany().HasForeignKey(a=>a.Id);
 
             modelBuilder.Entity<UserName>().Property(c => c.Name)
                 //.HasComputedColumnSql("[UserNames.LastName] + ' '+ [UserNames.FirstName]+ ' '+ [UserNames.SurName]", stored: true);
