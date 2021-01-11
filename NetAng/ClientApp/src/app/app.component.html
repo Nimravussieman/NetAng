@@ -1,0 +1,65 @@
+<!--<header>
+  <nav class='navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3'>
+    <div class="container">
+      <a class="navbar-brand" [routerLink]='["/"]'>NetAng</a>
+      <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse" [ngClass]='{"show": isExpanded}'>
+        <ul class="navbar-nav flex-grow">
+          <li class="nav-item" [routerLinkActive]='["link-active"]' [routerLinkActiveOptions]='{ exact: true }'>
+            <a class="nav-link text-dark" [routerLink]='["/"]'>Home</a>
+          </li>
+          <li class="nav-item" [routerLinkActive]='["link-active"]'>
+            <a class="nav-link text-dark" [routerLink]='["/data"]'>Web api data</a>
+          </li>
+          <app-login-menu [ngModel]="userName"></app-login-menu>
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>-->
+
+
+
+
+
+
+<!--<body>
+  <div style="text-align:center">
+    <h1>
+      Welcome to {{ title }}!
+    </h1>
+  </div>
+  <div class="router-outlet">
+    <router-outlet></router-outlet>
+  </div>-->
+
+
+
+
+
+  <!--<app-nav-menu></app-nav-menu>-->
+
+
+  <div class="wrapper">
+    <div class="sidebar" data-color="red">
+
+      <a class="nav-link text-dark" [routerLink]='["/data"]'>Web api data</a>
+      <!--<app-login-menu [ngModel]="userName"></app-login-menu>-->
+
+      <app-sidebar>
+
+        <a class="nav-link text-dark" [routerLink]='["/data"]'>Web api data</a>
+
+
+      </app-sidebar>
+
+    </div>
+    <div class="main-panel">
+      <app-navbar></app-navbar>
+      <!--<router-outlet></router-outlet>-->
+      <app-footer></app-footer>
+    </div>
+  </div>
+
+
+
+<!--</body>-->
