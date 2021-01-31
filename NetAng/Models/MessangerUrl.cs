@@ -11,7 +11,7 @@ namespace NetAng.Models
         [Key]
         public int Id { get; set; }
         public Url Value { get; set; }
-        public MessangerUrlType MessangerUrlType { get; set; }
+        public string Type { get; set; }
         //public MessangerUrlTypeOf MessangerUrlTypeOf { get; set; }
     }
 }

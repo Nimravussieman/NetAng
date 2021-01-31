@@ -1,28 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace NetAng.Models
+﻿namespace NetAng.Models
 {
+    //[Microsoft.EntityFrameworkCore.Owned]
     public class ContactFieldsPermissions
     {
-        [Key]
-        public int Id { get; set; }
         public bool IsPublic { get; set; }
-        public bool PhotoIsPublic { get; set; }
-        public bool DateOfBirthIsPublic { get; set; }
-        public bool PositionIsPublic { get; set; }
-        public bool PhonesIsPublic { get; set; }
-        public bool EmailsIsPublic { get; set; }
-        public bool SitesIsPublic { get; set; }
-        public bool MessangerUrlsIsPublic { get; set; }
-        public bool CompaniesIsPublic { get; set; }
-        public bool AddressesIsPublic { get; set; }
-        public bool DetailsIsPublic { get; set; }
-        public bool ContactTypeIsPublic { get; set; }
-        public bool ContactSourceIsPublic { get; set; }
-        public bool DescriptionIsPublic { get; set; }
+        public bool Photo_IsPublic { get; set; }
+        public bool DateOfBirth_IsPublic { get; set; }
+        public bool Position_IsPublic { get; set; }
+        public bool Phones_IsPublic { get; set; }
+        public bool Emails_IsPublic { get; set; }
+        public bool Sites_IsPublic { get; set; }
+        public bool MessangerUrls_IsPublic { get; set; }
+        public bool Companies_IsPublic { get; set; }
+        public bool Addresses_IsPublic { get; set; }
+        public bool Details_IsPublic { get; set; }
+        public bool ContactType_IsPublic { get; set; }
+        public bool ContactSource_IsPublic { get; set; }
+        public bool Description_IsPublic { get; set; }
     }
 }

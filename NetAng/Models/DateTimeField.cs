@@ -18,6 +18,6 @@ namespace NetAng.Models
         }
         private DateTime? value = null;
 
-        public string Description { get; set; }
+        //public string Description { get; set; }
     }
 }

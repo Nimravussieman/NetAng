@@ -10,7 +10,7 @@ namespace NetAng.Models
     {
         [Key]
         public int Id { get; set; }
-        public DetailsType Template { get; set; }
+        public string Type { get; set; }
 
         /// <summary>
         /// ////////////////////

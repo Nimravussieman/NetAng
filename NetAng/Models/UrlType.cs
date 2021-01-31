@@ -13,3 +13,10 @@ namespace NetAng.Models
         public string Name { get; set; }
     }
 }
+//Контактна інформація
+//Особистий
+//Facebook
+//ВКонтакті
+//LiveJournal
+//Twitter
+//Інший

@@ -1,68 +1,61 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace NetAng.Models
+﻿namespace NetAng.Models
 {
+    //[Microsoft.EntityFrameworkCore.Owned]
     public class AccountCompanyFieldsPermissions
     {
-        [Key]
-        public int Id { get; set; }
         public bool IsPublic { get; set; }
-        public bool CurrencyIsPublic { get; set; }
-        public bool CurrencyIsVisible { get; set; }
-        public bool ProductsIsPublic { get; set; }
-        public bool ProductssVisible { get; set; }
-        public bool ProjectsIsPublic { get; set; }
-        public bool ProjectssVisible { get; set; }
-        public bool JobsIsPublic { get; set; }
-        public bool JobssVisible { get; set; }
-        public bool CompaniesIsPublic { get; set; }
-        public bool CompaniessVisible { get; set; }
-        public bool ImageLogoIsPublic { get; set; }
-        public bool ImageLogosVisible { get; set; }
-        public bool FieldOfActivitiesIsPublic { get; set; }
-        public bool FieldOfActivitiessVisible { get; set; }
-        public bool PhonesIsPublic { get; set; }
-        public bool PhonessVisible { get; set; }
-        public bool EmailsIsPublic { get; set; }
-        public bool EmailssVisible { get; set; }
-        public bool SitesIsPublic { get; set; }
-        public bool SitessVisible { get; set; }
-        public bool MessangerUrlsIsPublic { get; set; }
-        public bool MessangerUrlssVisible { get; set; }
-        public bool ContactsIsPublic { get; set; }
-        public bool ContactssVisible { get; set; }
-        public bool AddressesIsPublic { get; set; }
-        public bool AddressessVisible { get; set; }
-        public bool EmployeesIsPublic { get; set; }
-        public bool EmployeessVisible { get; set; }
-        public bool DetailsIsPublic { get; set; }
-        public bool DetailssVisible { get; set; }
-        public bool BankDetailsIsPublic { get; set; }
-        public bool BankDetailssVisible { get; set; }
-        public bool DescriptionIsPublic { get; set; }
-        public bool DescriptionsVisible { get; set; }
-        public bool StringFieldsIsPublic { get; set; }
-        public bool StringFieldssVisible { get; set; }
-        public bool NumericFieldsIsPublic { get; set; }
-        public bool NumericFieldssVisible { get; set; }
-        public bool DateTimeFieldsIsPublic { get; set; }
-        public bool DateTimeFieldssVisible { get; set; }
-        public bool UrlsFieldsIsPublic { get; set; }
-        public bool UrlsFieldssVisible { get; set; }
-        public bool FileFieldsIsPublic { get; set; }
-        public bool FileFieldssVisible { get; set; }
-        public bool ImageFieldsIsPublic { get; set; }
-        public bool ImageFieldssVisible { get; set; }
-        public bool BooleanFieldsIsPublic { get; set; }
-        public bool BooleanFieldssVisible { get; set; }
-        public bool OperationsIsPublic { get; set; }
-        public bool OperationssVisible { get; set; }
-        public bool PermissionsIsPublic { get; set; }
-        public bool PermissionssVisible { get; set; }
+        public bool Currency_IsPublic { get; set; }
+        public bool Currency_IsVisible { get; set; }
+        public bool Products_IsPublic { get; set; }
+        public bool Products_IsVisible { get; set; }
+        public bool Projects_IsPublic { get; set; }
+        public bool Projects_IsVisible { get; set; }
+        public bool Jobs_IsPublic { get; set; }
+        public bool Jobs_IsVisible { get; set; }
+        public bool Companies_IsPublic { get; set; }
+        public bool Companies_IsVisible { get; set; }
+        public bool ImageLogo_IsPublic { get; set; }
+        public bool ImageLogo_IsVisible { get; set; }
+        public bool FieldOfActivities_IsPublic { get; set; }
+        public bool FieldOfActivities_IsVisible { get; set; }
+        public bool Phones_IsPublic { get; set; }
+        public bool Phones_IsVisible { get; set; }
+        public bool Emails_IsPublic { get; set; }
+        public bool Emails_IsVisible { get; set; }
+        public bool Sites_IsPublic { get; set; }
+        public bool Sites_IsVisible { get; set; }
+        public bool MessangerUrls_IsPublic { get; set; }
+        public bool MessangerUrls_IsVisible { get; set; }
+        public bool Contacts_IsPublic { get; set; }
+        public bool Contacts_IsVisible { get; set; }
+        public bool Addresses_IsPublic { get; set; }
+        public bool Addresses_IsVisible { get; set; }
+        public bool Employees_IsPublic { get; set; }
+        public bool Employees_IsVisible { get; set; }
+        public bool Details_IsPublic { get; set; }
+        public bool Details_IsVisible { get; set; }
+        public bool BankDetails_IsPublic { get; set; }
+        public bool BankDetails_IsVisible { get; set; }
+        public bool Description_IsPublic { get; set; }
+        public bool Descriptions_IsVisible { get; set; }
+        public bool StringFields_IsPublic { get; set; }
+        public bool StringFields_IsVisible { get; set; }
+        public bool NumericFields_IsPublic { get; set; }
+        public bool NumericFields_IsVisible { get; set; }
+        public bool DateTimeFields_IsPublic { get; set; }
+        public bool DateTimeFields_IsVisible { get; set; }
+        public bool UrlsFields_IsPublic { get; set; }
+        public bool UrlsFields_IsVisible { get; set; }
+        public bool FileFields_IsPublic { get; set; }
+        public bool FileFields_IsVisible { get; set; }
+        public bool ImageFields_IsPublic { get; set; }
+        public bool ImageFields_IsVisible { get; set; }
+        public bool BooleanFields_IsPublic { get; set; }
+        public bool BooleanFields_IsVisible { get; set; }
+        public bool Operations_IsPublic { get; set; }
+        public bool Operations_IsVisible { get; set; }
+        public bool Permissions_IsPublic { get; set; }
+        public bool Permissions_IsVisible { get; set; }
 
     }
 }

@@ -10,6 +10,6 @@ namespace NetAng.Models
     {
         [Key]
         public int Id { get; set; }
-        public string Value { get; set; }//Клієнти   //Постачальники     //Партнери      //Інше
+        public string Name { get; set; }//Клієнти   //Постачальники     //Партнери      //Інше
     }
 }

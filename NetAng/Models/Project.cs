@@ -42,5 +42,6 @@ namespace NetAng.Models
         public string Goals { get; set; }
         public bool IsCompleted { get; set; }
         public bool IsSuccessfully { get; set; }
+        //public bool IsAccount { get; set; } = true;
     }
 }

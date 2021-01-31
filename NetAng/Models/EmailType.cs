@@ -13,3 +13,7 @@ namespace NetAng.Models
         public string Name { get; set; }
     }
 }
+//Робочий
+//    Приватний
+//    Для розсилок
+//    Інший

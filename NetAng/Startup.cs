@@ -12,6 +12,8 @@ using Pomelo.EntityFrameworkCore.MySql.Infrastructure;
 using Pomelo.EntityFrameworkCore.MySql.Storage;
 using System;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http.Extensions;
+using NetAng.Models.SupportingModels;
 
 namespace NetAng
 {
@@ -27,45 +29,10 @@ namespace NetAng
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ////Pomelo.EntityFrameworkCore.MySql      -v: >5
-            //services.AddDbContextPool<AuthDbContext>(
-            //    dbContextOptions => dbContextOptions
-            //        .UseMySql(
-            //            // Replace with your connection string.
-            //            Configuration.GetConnectionString("PomeloConnection"),
-            //            // Replace with your server version and type.
-            //            // For common usages, see pull request #1233.
-            //            new MySqlServerVersion(new Version(10, 4, 14))
-            //           , 
-            ////            // use MariaDbServerVersion for MariaDB
-            //            mySqlOptions => mySqlOptions
-            //                .CharSetBehavior(CharSetBehavior.NeverAppend))
-            ////// Everything from this point on is optional but helps with debugging.
-            //.EnableSensitiveDataLogging()
-            //.EnableDetailedErrors()
-            //);
 
             services.AddDbContext<AuthDbContext>(options =>
             options.UseNpgsql(Configuration.GetConnectionString("PostgresConnection")));
 
-            //services.AddDbContext<AuthDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("AuthConnectionSqLite")));
-
-            //Pomelo.EntityFrameworkCore.MySql      -v: <5
-            //services.AddDbContext<AuthDbContext>(options => options
-            //    .UseMySql(Configuration.GetConnectionString("PomeloConnection"),
-            //        mysqlOptions =>
-            //            mysqlOptions.ServerVersion(new ServerVersion(new Version(10, 4, 14), ServerType.MariaDb))
-            //            ));
-
-            //MySql.Data.EntityFrameworkCore Version: < 5
-            //services.AddDbContext<AuthDbContext>(options => options
-            //    .UseMySQL(Configuration.GetConnectionString("MySqlConnection")
-            //));
-
-            //Devart.Data.MySql.EFCore      have Licence!
-            //services.AddDbContext<AuthDbContext>(options => options.UseMySql
-            //    (Configuration.GetConnectionString("MySqlConnection")
-            //));
 
 
 
@@ -75,8 +42,12 @@ namespace NetAng
             services.AddIdentityServer().AddApiAuthorization<ApplicationUser, AuthDbContext>();
             services.AddAuthentication().AddIdentityServerJwt();
 
-            services.AddControllers();
-            services.AddRazorPages();
+            services.AddControllers();//.AddNewtonsoftJson(); 
+            //(opts =>
+            //{
+            //    opts.ModelBinderProviders.Insert(0, new ContactModelBinderProvider());
+            //});
+            //services.AddRazorPages();
             //services.AddControllersWithViews();
 
             // In production, the Angular files will be served from this directory
@@ -84,6 +55,8 @@ namespace NetAng
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddMvc(o => o.InputFormatters.Insert(0, new RawRequestBodyFormatter()));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,7 +72,11 @@ namespace NetAng
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
+            app.Use((context, next) =>
+            {
+                var url = context.Request.GetDisplayUrl();
+                return next.Invoke();
+            });
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             if (!env.IsDevelopment())
@@ -115,17 +92,8 @@ namespace NetAng
 
             app.UseEndpoints(endpoints =>
             { 
-                endpoints.MapControllers();//?????????????????????????????
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");//"{controller}/{action}"
-
-                //endpoints.MapControllerRoute(
-                //    name: "public",
-                //    pattern: "{public}/{action}");
-
                 endpoints.MapRazorPages();
-               
+                endpoints.MapControllers();
             });
 
             app.UseSpa(spa =>
@@ -144,3 +112,96 @@ namespace NetAng
         }
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+////Pomelo.EntityFrameworkCore.MySql      -v: >5
+//services.AddDbContextPool<AuthDbContext>(
+//    dbContextOptions => dbContextOptions
+//        .UseMySql(
+//            // Replace with your connection string.
+//            Configuration.GetConnectionString("PomeloConnection"),
+//            // Replace with your server version and type.
+//            // For common usages, see pull request #1233.
+//            new MySqlServerVersion(new Version(10, 4, 14))
+//           , 
+////            // use MariaDbServerVersion for MariaDB
+//            mySqlOptions => mySqlOptions
+//                .CharSetBehavior(CharSetBehavior.NeverAppend))
+////// Everything from this point on is optional but helps with debugging.
+//.EnableSensitiveDataLogging()
+//.EnableDetailedErrors()
+//);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//services.AddDbContext<AuthDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("AuthConnectionSqLite")));
+
+//Pomelo.EntityFrameworkCore.MySql      -v: <5
+//services.AddDbContext<AuthDbContext>(options => options
+//    .UseMySql(Configuration.GetConnectionString("PomeloConnection"),
+//        mysqlOptions =>
+//            mysqlOptions.ServerVersion(new ServerVersion(new Version(10, 4, 14), ServerType.MariaDb))
+//            ));
+
+//MySql.Data.EntityFrameworkCore Version: < 5
+//services.AddDbContext<AuthDbContext>(options => options
+//    .UseMySQL(Configuration.GetConnectionString("MySqlConnection")
+//));
+
+//Devart.Data.MySql.EFCore      have Licence!
+//services.AddDbContext<AuthDbContext>(options => options.UseMySql
+//    (Configuration.GetConnectionString("MySqlConnection")
+//));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//endpoints.MapControllerRoute(
+//    name: "default",
+//    pattern: "{controller}/{action=Index}/{id?}");//"{controller}/{action}"
+
+//endpoints.MapControllerRoute(
+//    name: "public",
+//    pattern: "{controller=public}/{action}");
+
+

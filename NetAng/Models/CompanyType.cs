@@ -13,3 +13,8 @@ namespace NetAng.Models
         public string Name { get; set; }
     }
 }
+//Клієнт
+//    Постачальник
+//    Конкурент
+//    Партнер
+//    Інше

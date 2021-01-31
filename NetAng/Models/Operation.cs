@@ -13,13 +13,30 @@ namespace NetAng.Models
         public DateTime CreateDate { get; set; }
         public DateTime DateOfChange { get; set; }
         public DateTime EndDate { get; set; }
-        public Phase Phase { get; set; }
-        public OperationType TypeOfOperation { get; set; }
+        public string Phase { get; set; }
+        public string OperationSource { get; set; }
+        public string TypeOfOperation { get; set; }
         public string Description { get; set; }
         public bool AvailableToEveryone { get; set; }
         public List<Contact> Contacts { get; set; }
         public List<Company> Contractors { get; set; }
-        public OperationFieldsPermissions Permissions { get; set; }
+        public bool IsAccount { get; set; } = true;
+        public OperationFieldsPermissions Permissions { get; set; } = new OperationFieldsPermissions()
+        {
+            IsPublic = true,
+            Amount_IsPublic = true,
+            CreateDate_IsPublic = true,
+            DateOfChange_IsPublic = false,
+            EndDate_IsPublic = true,
+            Phase_IsPublic = true,
+            TypeOfOperation_IsPublic = true,
+            Description_IsPublic = true,
+            AvailableToEveryone_IsPublic = false,
+            Contacts_IsPublic = false,
+            Contractors_IsPublic = false,
+            Permissions_IsPublic = false
+
+        };
         //void fu()
         //{
         //    Money a = new money.Money(0.99);

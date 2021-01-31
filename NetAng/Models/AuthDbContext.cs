@@ -1,6 +1,7 @@
 ﻿using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.Extensions.Options;
 using System;
@@ -20,19 +21,19 @@ namespace NetAng.Models
             DbContextOptions<AuthDbContext> options,
             IOptions<OperationalStoreOptions> operationalStoreOptions)
             : base(options, operationalStoreOptions)
-        {
-        }
+        { }
+       
 
 
         public DbSet<Account> Accounts { get; set; }
-        public DbSet<AccountCompanyFieldsPermissions> AccountCompanyFieldsPermissions { get; set; }
+        //public DbSet<AccountCompanyFieldsPermissions> AccountCompanyFieldsPermissions { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<AddressType> AddressTypes { get; set; }
         public DbSet<BankDetails> BankDetails { get; set; }
         public DbSet<BooleanField> BooleanFields { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Company> Companies { get; set; }
-        public DbSet<CompanyFieldsPermissions> CompanyFieldsPermissions { get; set; }
+        //public DbSet<CompanyFieldsPermissions> CompanyFieldsPermissions { get; set; }
         public DbSet<ContactSource> ContactSources { get; set; }
         public DbSet<CompanyType> CompanyTypes { get; set; }
         public DbSet<Contact> Contacts { get; set; }
@@ -58,72 +59,90 @@ namespace NetAng.Models
         public DbSet<Notification> Notifications { get; set; }
         public DbSet<NotificationType> NotificationTypes { get; set; }
         public DbSet<Operation> Operations { get; set; }
-        public DbSet<OperationFieldsPermissions> OperationFieldsPermissions { get; set; }
+        //public DbSet<OperationFieldsPermissions> OperationFieldsPermissions { get; set; }
         public DbSet<OperationType> OperationTypes { get; set; }
         public DbSet<Phase> Phases { get; set; }
         public DbSet<Phone> Phones { get; set; }
         public DbSet<PhoneType> PhoneTypes { get; set; }
         public DbSet<Product> Products { get; set; }
-        public DbSet<ProductFieldsPermissions> ProductFieldsPermissions { get; set; }
+        //public DbSet<ProductFieldsPermissions> ProductFieldsPermissions { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<OperationSource> OperationSources { get; set; }
         public DbSet<StringField> StringFields { get; set; }
         public DbSet<Url> Urls { get; set; }
         public DbSet<UrlType> UrlTypes { get; set; }
-        public DbSet<UserName> UserNames { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);//necessary !!!!!!!!!!!!!!!!!!!!!!!
-            //    modelBuilder.ApplyConfiguration(new MyEntityDbConfiguration());            //modelBuilder.Entity<CompanyFieldsPermissions>().Property(c => c.IsPublic).HasDefaultValue(true);
-            ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            base.OnModelCreating(modelBuilder);
 
-            //modelBuilder.Entity<ApplicationUser>().HasOne(u => u.Account).WithMany().HasForeignKey(a=>a.Id);
+            //modelBuilder.Entity<Account>().ToTable("Account");
+            //modelBuilder.Entity<Contact>().ToTable("Contact");
+            //modelBuilder.Entity<Address>().ToTable("Address");
 
-            modelBuilder.Entity<UserName>().Property(c => c.Name)
-                //.HasComputedColumnSql("[UserNames.LastName] + ' '+ [UserNames.FirstName]+ ' '+ [UserNames.SurName]", stored: true);
-            .HasComputedColumnSql(@"""FirstName"" || ' ' || ""LastName""|| ' ' || ""SurName""", stored: true);//    for PostgresSQL
+            modelBuilder.Entity<ApplicationUser>(entity => entity.Property(a => a.IsAdmin).HasValueGenerator<AccountGenerator>());            //modelBuilder.Entity<ApplicationUser>(entity => entity.Property(a => a.Account).HasValueGenerator<AccountGenerator>());
+            //modelBuilder.Entity<ApplicationUser>().HasOne(a=>a.Account).WithMany(x => x.Addresses).HasForeignKey(x => x);
+
+
+            modelBuilder
+            .Entity<ApplicationUser>()
+            .HasOne(u => u.Account)
+            .WithOne(p => p.ApplicationUser)
+            .HasForeignKey<Account>(p => p.ApplicationUserId);
+            //modelBuilder.Entity<ApplicationUser>().ToTable("AspNetUsers");
+            //modelBuilder.Entity<Account>().ToTable("AspNetUsers");
+
+            //modelBuilder.Entity<ApplicationUser>().OwnsOne(i => i.Account, a =>
+            //{
+            //    a.OwnsOne(c => c.Permissions);
+            //});
+            //modelBuilder.Entity<ApplicationUser>().OwnsOne(i => i.Account);
+            modelBuilder.Entity<Account>().OwnsOne(i => i.Permissions);
+            modelBuilder.Entity<Company>().OwnsOne(i => i.Permissions);
+            modelBuilder.Entity<Contact>().OwnsOne(i => i.Permissions);
+            modelBuilder.Entity<Operation>().OwnsOne(i => i.Permissions);
+            modelBuilder.Entity<Product>().OwnsOne(i => i.Permissions);
+            modelBuilder.Entity<Contact>().OwnsOne(i => i.Name);
+
+            //modelBuilder.Entity<Contact>().Property(c => c.Name.Name)
+            //    //.HasComputedColumnSql("[UserNames.LastName] + ' '+ [UserNames.FirstName]+ ' '+ [UserNames.SurName]", stored: true);
+            //.HasComputedColumnSql(@"""FirstName"" || ' ' || ""LastName""|| ' ' || ""SurName""", stored: true);//    for PostgresSQL
             
-            modelBuilder.ApplyConfiguration(new EntityDbConfigurationForCompanyFieldPermissions());
             //modelBuilder.ApplyConfiguration(new EntityDbConfigurationForUsrName());
-            modelBuilder.ApplyConfiguration(new EntityDbConfigurationForContactFieldsPermissions());
             modelBuilder.ApplyConfiguration(new EntityDbConfigurationForProduct());
-            modelBuilder.ApplyConfiguration(new EntityDbConfigurationForProductFieldsPermissions());
-            modelBuilder.ApplyConfiguration(new EntityDbConfigurationForAccountCompanyFieldsPermissions());
-            modelBuilder.ApplyConfiguration(new EntityDbConfigurationForOperationFieldsPermissions());
+            //modelBuilder.ApplyConfiguration(new EntityDbConfigurationForProductFieldsPermissions());
+            //modelBuilder.ApplyConfiguration(new EntityDbConfigurationForAccountCompanyFieldsPermissions());
+            //modelBuilder.ApplyConfiguration(new EntityDbConfigurationForOperationFieldsPermissions());
+            //modelBuilder.ApplyConfiguration(new EntityDbConfigurationForContactFieldsPermissions());
+            //modelBuilder.ApplyConfiguration(new EntityDbConfigurationForCompanyFieldPermissions());
+
         }
     }
-    //public class MyEntityDbConfiguration : IEntityTypeConfiguration<Url>//  =>  for Url table
-    //{
-    //    public void Configure(EntityTypeBuilder<Url> builder)
-    //    {
-    //        builder.Property(e => e.Link).HasConversion(v => v.ToString(), v => new Uri(v));
-    //    }
-    //}
+
     public class EntityDbConfigurationForCompanyFieldPermissions : IEntityTypeConfiguration<CompanyFieldsPermissions>
     {
         public void Configure(EntityTypeBuilder<CompanyFieldsPermissions> builder)
         {
-            builder.Property(e => e.Id).UseIdentityColumn();
+            //builder.Property(e => e.Id).UseIdentityColumn();
             builder.Property(e => e.IsPublic).HasDefaultValue(true);
-            builder.Property(e => e.MessangerUrlsIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.NumericFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.PermissionsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.PhonesIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.SitesIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.StringFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.UrlsFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.AddressesIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.BankDetailsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.DescriptionIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.ContactsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.DateTimeFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.DetailsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.EmailsIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.EmployeesIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.FileFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.BooleanFieldsIsPublic).HasDefaultValue(false);
+            builder.Property(e => e.MessangerUrls_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.NumericFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Permissions_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Phones_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Sites_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.StringFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.UrlsFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Addresses_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.BankDetails_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Description_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Contacts_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.DateTimeFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Details_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Emails_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Employees_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.FileFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.BooleanFields_IsPublic).HasDefaultValue(false);
         }
     }
     //public class EntityDbConfigurationForUsrName : IEntityTypeConfiguration<UserName>
@@ -140,21 +159,21 @@ namespace NetAng.Models
     {
         public void Configure(EntityTypeBuilder<ContactFieldsPermissions> builder)
         {
-            builder.Property(e => e.Id).UseIdentityColumn();
+            //builder.Property(e => e.Id).UseIdentityColumn();
             builder.Property(e => e.IsPublic).HasDefaultValue(false);
-            builder.Property(e => e.AddressesIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.CompaniesIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.ContactSourceIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.ContactTypeIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.DateOfBirthIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.DescriptionIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.DetailsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.EmailsIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.MessangerUrlsIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.PhonesIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.PhotoIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.PositionIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.SitesIsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Addresses_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Companies_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.ContactSource_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.ContactType_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.DateOfBirth_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Description_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Details_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Emails_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.MessangerUrls_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Phones_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Photo_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Position_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Sites_IsPublic).HasDefaultValue(true);
         }
     }
     public class EntityDbConfigurationForProduct : IEntityTypeConfiguration<Product>
@@ -169,107 +188,130 @@ namespace NetAng.Models
     {
         public void Configure(EntityTypeBuilder<ProductFieldsPermissions> builder)
         {
-            builder.Property(e => e.Id).UseIdentityColumn();
+            //builder.Property(e => e.Id).UseIdentityColumn();
             builder.Property(e => e.IsPublic).HasDefaultValue(false);
-            builder.Property(e => e.CreateDateIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.DateOfChangeIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.DateTimeFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.DescriptionIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.FileFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.Id).HasDefaultValue(false);
-            builder.Property(e => e.ImagesIsPublic).HasDefaultValue(true);
+            builder.Property(e => e.CreateDate_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.DateOfChange_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.DateTimeFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Description_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.FileFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Images_IsPublic).HasDefaultValue(true);
             builder.Property(e => e.IsActive).HasDefaultValue(true);
-            builder.Property(e => e.MeasurementUnitIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.NameIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.NumericFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.PermissionsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.PriceIsPublic).HasDefaultValue(true);
-            builder.Property(e => e.QuantityIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.SortIndexIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.StartActivityDateIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.StopActivityDateIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.StringFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.UrlsFieldsIsPublic).HasDefaultValue(true);
+            builder.Property(e => e.MeasurementUnit_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Name_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.NumericFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Permissions_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Price_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Quantity_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.SortIndex_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.StartActivityDate_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.StopActivityDate_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.StringFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.UrlsFields_IsPublic).HasDefaultValue(true);
         }
     }
     public class EntityDbConfigurationForAccountCompanyFieldsPermissions : IEntityTypeConfiguration<AccountCompanyFieldsPermissions>
     {
         public void Configure(EntityTypeBuilder<AccountCompanyFieldsPermissions> builder)
         {
-            builder.Property(e => e.Id).UseIdentityColumn();
+            //builder.Property(e => e.Id).UseIdentityColumn();
             builder.Property(e => e.IsPublic).HasDefaultValue(true);
-            builder.Property(e => e.CurrencyIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.CurrencyIsVisible).HasDefaultValue(false);
-            builder.Property(e => e.ProductsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.ProductssVisible).HasDefaultValue(false);
-            builder.Property(e => e.ProjectsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.ProjectssVisible).HasDefaultValue(false);
-            builder.Property(e => e.JobsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.JobssVisible).HasDefaultValue(false);
-            builder.Property(e => e.CompaniesIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.CompaniessVisible).HasDefaultValue(false);
-            builder.Property(e => e.ImageLogoIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.ImageLogosVisible).HasDefaultValue(false);
-            builder.Property(e => e.FieldOfActivitiesIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.FieldOfActivitiessVisible).HasDefaultValue(false);
-            builder.Property(e => e.PhonesIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.PhonessVisible).HasDefaultValue(false);
-            builder.Property(e => e.EmailsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.EmailssVisible).HasDefaultValue(false);
-            builder.Property(e => e.SitesIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.SitessVisible).HasDefaultValue(false);
-            builder.Property(e => e.MessangerUrlsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.MessangerUrlssVisible).HasDefaultValue(false);
-            builder.Property(e => e.ContactsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.ContactssVisible).HasDefaultValue(false);
-            builder.Property(e => e.AddressesIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.AddressessVisible).HasDefaultValue(false);
-            builder.Property(e => e.EmployeesIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.EmployeessVisible).HasDefaultValue(false);
-            builder.Property(e => e.DetailsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.DetailssVisible).HasDefaultValue(false);
-            builder.Property(e => e.BankDetailsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.BankDetailssVisible).HasDefaultValue(false);
-            builder.Property(e => e.DescriptionIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.DescriptionsVisible).HasDefaultValue(false);
-            builder.Property(e => e.StringFieldssVisible).HasDefaultValue(false);
-            builder.Property(e => e.NumericFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.NumericFieldssVisible).HasDefaultValue(false);
-            builder.Property(e => e.DateTimeFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.DateTimeFieldssVisible).HasDefaultValue(false);
-            builder.Property(e => e.UrlsFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.UrlsFieldssVisible).HasDefaultValue(false);
-            builder.Property(e => e.FileFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.FileFieldssVisible).HasDefaultValue(false);
-            builder.Property(e => e.ImageFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.ImageFieldssVisible).HasDefaultValue(false);
-            builder.Property(e => e.BooleanFieldsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.BooleanFieldssVisible).HasDefaultValue(false);
-            builder.Property(e => e.OperationsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.OperationssVisible).HasDefaultValue(false);
-            builder.Property(e => e.PermissionsIsPublic).HasDefaultValue(false);
-            builder.Property(e => e.PermissionssVisible).HasDefaultValue(false);
+            builder.Property(e => e.Currency_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Currency_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Products_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Products_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Projects_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Projects_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Jobs_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Jobs_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Companies_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Companies_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.ImageLogo_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.ImageLogo_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.FieldOfActivities_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.FieldOfActivities_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Phones_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Phones_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Emails_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Emails_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Sites_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Sites_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.MessangerUrls_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.MessangerUrls_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Contacts_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Contacts_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Addresses_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Addresses_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Employees_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Employees_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Details_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Details_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.BankDetails_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.BankDetails_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Description_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Description_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.StringFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.NumericFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.NumericFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.DateTimeFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.DateTimeFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.UrlsFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.UrlsFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.FileFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.FileFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.ImageFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.ImageFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.BooleanFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.BooleanFields_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Operations_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Operations_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Permissions_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Permissions_IsPublic).HasDefaultValue(false);
         }
     }
     public class EntityDbConfigurationForOperationFieldsPermissions : IEntityTypeConfiguration<OperationFieldsPermissions>
     {
         public void Configure(EntityTypeBuilder<OperationFieldsPermissions> builder)
         {
-            builder.Property(e => e.Id).UseIdentityColumn();
+            //builder.Property(e => e.Id).UseIdentityColumn();
             builder.Property(e => e.IsPublic).HasDefaultValue(true);
-            builder.Property(e => e.Amount).HasDefaultValue(true);
-            builder.Property(e => e.CreateDate).HasDefaultValue(true);
-            builder.Property(e => e.DateOfChange).HasDefaultValue(false);
-            builder.Property(e => e.EndDate).HasDefaultValue(true);
-            builder.Property(e => e.Phase ).HasDefaultValue(true);
-            builder.Property(e => e.TypeOfOperation).HasDefaultValue(true);
-            builder.Property(e => e.Description ).HasDefaultValue(true);
-            builder.Property(e => e.AvailableToEveryone).HasDefaultValue(false);
-            builder.Property(e => e.Contacts).HasDefaultValue(false);
-            builder.Property(e => e.Contractors ).HasDefaultValue(false);
-            builder.Property(e => e.Permissions ).HasDefaultValue(false);
+            builder.Property(e => e.Amount_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.CreateDate_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.DateOfChange_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.EndDate_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Phase_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.TypeOfOperation_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.Description_IsPublic).HasDefaultValue(true);
+            builder.Property(e => e.AvailableToEveryone_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Contacts_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Contractors_IsPublic).HasDefaultValue(false);
+            builder.Property(e => e.Permissions_IsPublic).HasDefaultValue(false);
         }
     }
+
+
+
+
+    public class AccountGenerator : Microsoft.EntityFrameworkCore.ValueGeneration.ValueGenerator
+    {
+        public override bool GeneratesTemporaryValues => false;
+        //private readonly AMCDbContext db;
+        //public SampleIDGenerator(AMCDbContext context)
+        //{
+        //    db = context;
+        //}
+        protected override object NextValue(EntityEntry entry)
+        {
+            AuthDbContext db = (AuthDbContext)entry.Context;
+            Account account = new Account();
+            //account.Permissions = new AccountCompanyFieldsPermissions();
+            db.Accounts.Add(account);
+            ((ApplicationUser)(entry.Entity)).Account = account;
+            return true;
+        }
+    }
+
+
 
 }
 

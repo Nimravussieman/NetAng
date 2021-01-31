@@ -12,6 +12,6 @@ namespace NetAng.Models
         public int Id { get; set; }
         [EmailAddress]
         public string Value { get; set; }
-        public EmailType EmailType { get; set; }
+        public string Type { get; set; }
     }
 }

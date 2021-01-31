@@ -51,9 +51,31 @@ namespace NetAng.Models
         public List<StringField> StringFields { get; set; }
         public List<NumericField> NumericFields { get; set; }
         public List<DateTimeField> DateTimeFields { get; set; }
-        public List<Url> UrlsFields { get; set; }
+        //public List<Url> UrlsFields { get; set; }
         public List<FileField> FileFields { get; set; }
-        public ProductFieldsPermissions Permissions { get; set; }
+        public ProductFieldsPermissions Permissions { get; set; } = new ProductFieldsPermissions()
+        {
+            IsPublic = false,
+            CreateDate_IsPublic = false,
+            DateOfChange_IsPublic = false,
+            DateTimeFields_IsPublic = false,
+            Description_IsPublic = true,
+            FileFields_IsPublic = false,
+            Images_IsPublic = true,
+            IsActive = true,
+            MeasurementUnit_IsPublic = false,
+            Name_IsPublic = true,
+            NumericFields_IsPublic = false,
+            Permissions_IsPublic = false,
+            Price_IsPublic = true,
+            Quantity_IsPublic = false,
+            SortIndex_IsPublic = false,
+            StartActivityDate_IsPublic = false,
+            StopActivityDate_IsPublic = false,
+            StringFields_IsPublic = false,
+            //UrlsFields_IsPublic = true
+
+        };
 
 
     }

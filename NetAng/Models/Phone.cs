@@ -17,6 +17,6 @@ namespace NetAng.Models
         [RegularExpression(@"^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$", ErrorMessage = "Not a valid phone number")]
 
         public string Value { get; set; }
-        public PhoneType PhoneType { get; set; }
+        public string Type { get; set; }
     }
 }

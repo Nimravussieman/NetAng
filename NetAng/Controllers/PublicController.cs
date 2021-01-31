@@ -21,10 +21,11 @@ namespace NetAng.Controllers
         public PublicController(AuthDbContext authDbContext) {
             this.db = authDbContext;
         }
+
         [HttpGet("contactCount")]
         public int ContactCount()
         { 
-            int a = this.db.Contacts.Count(c=>c.ContactFieldsPermissions.AddressesIsPublic);
+            int a = this.db.Contacts.Count(c=>c.Permissions.Addresses_IsPublic);
             return a;
         }
 
@@ -32,17 +33,15 @@ namespace NetAng.Controllers
         //public async Task<List<Contact>> ContactPaginationsAsync(string searchString,int? pageNumber, int pageSize)
         public async Task<Object> ContactPaginationsAsync(string searchString, int? pageNumber, int pageSize)
         {
-            var cont = this.db.Contacts.AsQueryable();
+            var cont = this.db.Contacts.Include(g=>g.Phones).AsQueryable();
             if (!String.IsNullOrEmpty(searchString))
-                cont.Where(c => c.Name.Name.Contains(searchString)
-                               //   || s.FirstMidName.Contains(searchString)
-                               );
-            var ct = new List<Contact>() { 
-                new Contact() { Name = new UserName(){LastName ="a" }, Addresses=new List<Address>(){ new Address() { Value = "Some Address", AddressType = new AddressType() { Name = "Some Type", Id = 1 } } } }, new Contact() { Name = new UserName(){LastName ="ah" } },new Contact() { Name = new UserName(){LastName ="ahj" } },new Contact() { Name = new UserName(){LastName ="adxfht" } },new Contact() { Name = new UserName(){LastName ="aefga" } },new Contact() { Name = new UserName(){LastName ="wsegsdva" } },new Contact() { Name = new UserName(){LastName ="agfba" } },new Contact() { Name = new UserName(){LastName ="aghjvtuk" } },new Contact() { Name = new UserName(){LastName ="rdjkgjhma" } },new Contact() { Name = new UserName(){LastName ="atdyk" } },new Contact() { Name = new UserName(){LastName ="tdyka" } },new Contact() { Name = new UserName(){LastName ="fguy,ka" } },new Contact() { Name = new UserName(){LastName ="yula" } },new Contact() { Name = new UserName(){LastName ="yiula" } },new Contact() { Name = new UserName(){LastName ="ayuk" } },new Contact() { Name = new UserName(){LastName ="hvu,a" } },new Contact() { Name = new UserName(){LastName ="a" } },new Contact() { Name = new UserName(){LastName ="a" } },new Contact() { Name = new UserName(){LastName ="a" } },new Contact() { Name = new UserName(){LastName ="a" } },new Contact() { Name = new UserName(){LastName ="a" } },new Contact() { Name = new UserName(){LastName ="a" } },new Contact() { Name = new UserName(){LastName ="afcgjghmn" } },new Contact() { Name = new UserName(){LastName ="afjmgyuk" } },new Contact() { Name = new UserName(){LastName ="fgjha" } }
-            };
-            return await PaginatedList<Contact>.CreateAsync(ct.AsQueryable(), pageNumber ?? 1, pageSize);
+                cont.Where(c => c.Name.FirstName.Contains(searchString) || c.Name.LastName.Contains(searchString) || c.Name.SurName.Contains(searchString));
+            //var ct = new List<Contact>() { 
+            //    new Contact() { Name = new UserName(){LastName ="a" }, Addresses=new List<Address>(){ new Address() { Value = "Some Address",  } } }, new Contact() { Name = new UserName(){LastName ="ah" } },new Contact() { Name = new UserName(){LastName ="ahj" } },new Contact() { Name = new UserName(){LastName ="adxfht" } },new Contact() { Name = new UserName(){LastName ="aefga" } },new Contact() { Name = new UserName(){LastName ="wsegsdva" } },new Contact() { Name = new UserName(){LastName ="agfba" } },new Contact() { Name = new UserName(){LastName ="aghjvtuk" } },new Contact() { Name = new UserName(){LastName ="rdjkgjhma" } },new Contact() { Name = new UserName(){LastName ="atdyk" } },new Contact() { Name = new UserName(){LastName ="tdyka" } },new Contact() { Name = new UserName(){LastName ="fguy,ka" } },new Contact() { Name = new UserName(){LastName ="yula" } },new Contact() { Name = new UserName(){LastName ="yiula" } },new Contact() { Name = new UserName(){LastName ="ayuk" } },new Contact() { Name = new UserName(){LastName ="hvu,a" } },new Contact() { Name = new UserName(){LastName ="a" } },new Contact() { Name = new UserName(){LastName ="a" } },new Contact() { Name = new UserName(){LastName ="a" } },new Contact() { Name = new UserName(){LastName ="a" } },new Contact() { Name = new UserName(){LastName ="a" } },new Contact() { Name = new UserName(){LastName ="a" } },new Contact() { Name = new UserName(){LastName ="afcgjghmn" } },new Contact() { Name = new UserName(){LastName ="afjmgyuk" } },new Contact() { Name = new UserName(){LastName ="fgjha" } }
+            //};
+            //return await PaginatedList<Contact>.CreateAsync(ct.AsQueryable(), pageNumber ?? 1, pageSize);
 
-            //return await PaginatedList<Contact>.CreateAsync(cont.AsNoTracking(), pageNumber ?? 1, pageSize);
+            return await PaginatedList<Contact>.CreateAsync(cont.AsNoTracking(), pageNumber ?? 1, pageSize);
 
             //return await cont.AsNoTracking().ToListAsync();
         }
@@ -56,9 +55,10 @@ namespace NetAng.Controllers
                                //   || s.FirstMidName.Contains(searchString)
                                );
             var ct = new List<Company>() {
-                new Company() { Name = "a" , Addresses=new List<Address>(){ new Address() { Value = "Some Address", AddressType = new AddressType() { Name = "Some Type", Id = 1 } } } }, new Company() { Name  ="ah"  },new Company() { Name = "ahj" },new Company() { Name ="ayuk"  },new Company() { Name = "hvu,a"  },new Company() { Name = "afcgjghmn" },new Company() { Name ="afjmgyuk"  },new Company() { Name = "fgjha" }
-            };
-            return await PaginatedList<Company>.CreateAsync(ct.AsQueryable(), pageNumber ?? 1, pageSize);
+                new Company() { Name = "a" , Addresses=new List<Address>(){ new Address() { Value = "Some Address"} } }, new Company() { Name  ="ah"  },new Company() { Name = "ahj" },new Company() { Name ="ayuk"  },new Company() { Name = "hvu,a"  },new Company() { Name = "afcgjghmn" },new Company() { Name ="afjmgyuk"  },new Company() { Name = "fgjha" },new Company() { Name = "fgjha" },new Company() { Name = "fgjha" },new Company() { Name = "fgjha" },new Company() { Name = "fgjha" },new Company() { Name = "fgjha" },new Company() { Name = "fgjha" },new Company() { Name = "fgjha" },new Company() { Name = "fgjha" }
+            }.AsQueryable();
+            if (!String.IsNullOrEmpty(searchString)) ct = ct.Where(c => c.Name.Contains(searchString,StringComparison.OrdinalIgnoreCase));
+            return await PaginatedList<Company>.CreateAsync(ct, pageNumber ?? 1, pageSize);
 
             //return await PaginatedList<Contact>.CreateAsync(cont.AsNoTracking(), pageNumber ?? 1, pageSize);
 

@@ -1,0 +1,455 @@
+Add-Migration _0 -context AuthDbContext
+Update-Database -context AuthDbContext
+
+remove-migration name_of_bad_migration
+Get-Migrations
+
+
+
+Install NodeJs from NodeJs Official Page
+Open Terminal
+Go to your file project
+Run in terminal npm install -g @angular/cli
+Then run npm install
+And npm start
+Navigate to http://localhost:4200
+
+
+netstat -ano | findstr 4200
+taskkill  /F  /PID  <Process Id>
+
+
+
+DELETE FROM public."Accounts"
+DELETE FROM public."AspNetUsers"
+
+
+var blogs = context.Blogs
+        .Include(blog => blog.Posts)
+            .ThenInclude(post => post.Author)
+        .ToList();
+		
+		
+		var filteredBlogs = context.Blogs
+        .Include(blog => blog.Posts
+            .Where(post => post.BlogId == 1)
+            .OrderByDescending(post => post.Title)
+            .Take(5))
+        .ToList();
+		
+		
+		
+		db.Customers
+    .Where(c => !db.Blacklists
+        .Select(b => b.CusId)
+        .Contains(c.CusId)
+    );
+	
+	
+	
+...
+  @ViewChild('myForm') myForm: NgForm;
+  ...
+  ngAfterViewInit() {
+    this.myForm.valueChanges.subscribe((value) => {
+       console.log('Форма изменилась: ', value);
+    });
+  }	
+	
+	
+	
+	this.activatedRoute.paramMap
+  .subscribe(params => {
+    const id = params.get('id');
+
+	
+	
+	
+Asp net core exception handling:
+https://stackoverflow.com/questions/38630076/asp-net-core-web-api-exception-handling	
+	
+	file-upload
+	https://stackoverflow.com/questions/47936183/angular-file-upload
+	
+	
+	
+	<div class="main-content">
+  <div class="row">
+    <div class="col-md-8">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="title">Edit Profile</h5>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+              <div class="col-md-5 pr-1">
+                <div class="form-group">
+                  <label>Company (disabled)</label>
+                  <input type="text" class="form-control" disabled="" placeholder="Company" value="">
+                </div>
+              </div>
+              <div class="col-md-3 px-1">
+                <div class="form-group">
+                  <label>Username</label>
+                  <input type="text" class="form-control" placeholder="Username" value="michael23">
+                </div>
+              </div>
+              <div class="col-md-4 pl-1">
+                <div class="form-group">
+                  <label for="email">Email address</label>
+                  <input name="email" id="email" type="email" class="form-control" placeholder="Email">
+                </div>
+              </div>
+            </div>
+
+	
+	
+	
+	
+	
+	
+	Solution2: Keep your above json and use old Newtonsoft.Json in an ASP.NET Core 3.0 project by referencing Json.NET support.
+
+1) Install-Package Microsoft.AspNetCore.Mvc.NewtonsoftJson -Version 3.0.0
+
+2) Add services.AddControllers().AddNewtonsoftJson(); in startup.cs
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	INSERT INTO public."Currencies"(
+	"Id", "Name", "Cost")
+	VALUES ( 1,'USD', 0);
+	INSERT INTO public."Currencies"(
+	 "Id", "Name", "Cost")
+	VALUES ( 2,'EUR', 0.83);
+	INSERT INTO public."Currencies"(
+	 "Id", "Name", "Cost")
+	VALUES ( 3,'UAH', 28);
+	INSERT INTO public."Currencies"(
+	 "Id", "Name", "Cost")
+	VALUES ( 4,'RUB', 73.54);
+	
+	INSERT INTO public."AddressTypes"(
+	"Id", "Name")
+	VALUES (1, 'Actual address');
+	INSERT INTO public."AddressTypes"(
+	"Id", "Name")
+	VALUES (2, 'Registration address');
+	INSERT INTO public."AddressTypes"(
+	"Id", "Name")
+	VALUES (3, 'Legal address');
+	INSERT INTO public."AddressTypes"(
+	"Id", "Name")
+	VALUES (4, 'Beneficiary address');
+	INSERT INTO public."AddressTypes"(
+	"Id", "Name")
+	VALUES (5, 'Delivery address');
+	
+	INSERT INTO public."CompanyTypes"(
+	"Id", "Name")
+	VALUES (1, 'Client');
+	INSERT INTO public."CompanyTypes"(
+	"Id", "Name")
+	VALUES (2, 'Provider');
+	INSERT INTO public."CompanyTypes"(
+	"Id", "Name")
+	VALUES (3, 'Competitor');
+	INSERT INTO public."CompanyTypes"(
+	"Id", "Name")
+	VALUES (4, 'Partner');
+	INSERT INTO public."CompanyTypes"(
+	"Id", "Name")
+	VALUES (5, 'Other');
+	
+	INSERT INTO public."ContactTypes"(
+	"Id", "Value")
+	VALUES (1, 'Client');
+	INSERT INTO public."ContactTypes"(
+	"Id", "Value")
+	VALUES (2, 'Provider');
+	INSERT INTO public."ContactTypes"(
+	"Id", "Value")
+	VALUES (4, 'Partner');
+	INSERT INTO public."ContactTypes"(
+	"Id", "Value")
+	VALUES (5, 'Other');
+	
+	INSERT INTO public."DetailsTypes"(
+	"Id", "Name")
+	VALUES (1, 'Person-entrepreneur');
+	INSERT INTO public."DetailsTypes"(
+	"Id", "Name")
+	VALUES (2, 'Legal entity');
+	INSERT INTO public."DetailsTypes"(
+	"Id", "Name")
+	VALUES (3, 'Separated subdivision');
+	
+	INSERT INTO public."EmailTypes"(
+	"Id", "Name")
+	VALUES (1, 'Working');
+	INSERT INTO public."EmailTypes"(
+	"Id", "Name")
+	VALUES (2, 'Private');
+	INSERT INTO public."EmailTypes"(
+	"Id", "Name")
+	VALUES (3, 'For mailings');
+	INSERT INTO public."EmailTypes"(
+	"Id", "Name")
+	VALUES (4, 'Another');
+	
+	INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (1, 'Facebook');
+INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (2, 'Telegram');
+INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (3, 'ВКонтакті');
+INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (4, 'Skype');
+INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (5, 'Viber');
+INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (6, 'Instagram');
+INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (7, 'Бітрікс24.Network');
+INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (8, 'Онлайн-чат');
+INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (9, 'Відкрита лінія');
+INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (10, 'ICQ');
+INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (11, 'MSN/Live!');
+INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (12, 'Jabber');
+INSERT INTO public."MessangerUrlTypes"(
+	"Id", "Name")
+	VALUES (13, 'Інший');
+	
+	INSERT INTO public."NotificationTypes"(
+	"Id", "Name")
+	VALUES (1, '3');
+	INSERT INTO public."NotificationTypes"(
+	"Id", "Name")
+	VALUES (2, '2');
+	INSERT INTO public."NotificationTypes"(
+	"Id", "Name")
+	VALUES (3, '1');
+	
+	INSERT INTO public."OperationTypes"(
+	"Id", "Name")
+	VALUES (1, ' Not selected');
+INSERT INTO public."OperationTypes"(
+	"Id", "Name")
+	VALUES (2, 'Selling');
+INSERT INTO public."OperationTypes"(
+	"Id", "Name")
+	VALUES (3, ' Comprehensive sales');
+INSERT INTO public."OperationTypes"(
+	"Id", "Name")
+	VALUES (4, ' Sale of goods');
+INSERT INTO public."OperationTypes"(
+	"Id", "Name")
+	VALUES (5, ' Sales of the service');
+INSERT INTO public."OperationTypes"(
+	"Id", "Name")
+	VALUES (6, 'Service');
+	
+	INSERT INTO public."PhoneTypes"(
+	"Id", "Name")
+	VALUES (1, 'Working');
+INSERT INTO public."PhoneTypes"(
+	"Id", "Name")
+	VALUES (2, ' Mobile');
+INSERT INTO public."PhoneTypes"(
+	"Id", "Name")
+	VALUES (3, 'Fax');
+INSERT INTO public."PhoneTypes"(
+	"Id", "Name")
+	VALUES (4, 'Homely');
+INSERT INTO public."PhoneTypes"(
+	"Id", "Name")
+	VALUES (5, ' Pager');
+INSERT INTO public."PhoneTypes"(
+	"Id", "Name")
+	VALUES (6, ' For mailings');
+INSERT INTO public."PhoneTypes"(
+	"Id", "Name")
+	VALUES (7, 'Another');
+	
+	INSERT INTO public."UrlTypes"(
+	"Id", "Name")
+	VALUES (1, 'Contact Information');
+INSERT INTO public."UrlTypes"(
+	"Id", "Name")
+	VALUES (2, 'Personal');
+INSERT INTO public."UrlTypes"(
+	"Id", "Name")
+	VALUES (3, ' Facebook');
+INSERT INTO public."UrlTypes"(
+	"Id", "Name")
+	VALUES (4, ' VKontakte');
+INSERT INTO public."UrlTypes"(
+	"Id", "Name")
+	VALUES (5, ' LiveJournal');
+INSERT INTO public."UrlTypes"(
+	"Id", "Name")
+	VALUES (6, ' Twitter');
+INSERT INTO public."UrlTypes"(
+	"Id", "Name")
+	VALUES (7, 'Another');
+	
+	INSERT INTO public."ContactSources"(
+	"Id", "Value")
+	VALUES (1, 'Call');INSERT INTO public."ContactSources"(
+	"Id", "Value")
+	VALUES (2, 'E-mail');INSERT INTO public."ContactSources"(
+	"Id", "Value")
+	VALUES (3, 'Website');INSERT INTO public."ContactSources"(
+	"Id", "Value")
+	VALUES (4, 'Advertising');INSERT INTO public."ContactSources"(
+	"Id", "Value")
+	VALUES (5, 'Existing client');INSERT INTO public."ContactSources"(
+	"Id", "Value")
+	VALUES (6, 'On recommendation');INSERT INTO public."ContactSources"(
+	"Id", "Value")
+	VALUES (7, 'Exhibition');INSERT INTO public."ContactSources"(
+	"Id", "Value")
+	VALUES (8, 'CRM-form');INSERT INTO public."ContactSources"(
+	"Id", "Value")
+	VALUES (9, 'Callback');INSERT INTO public."ContactSources"(
+	"Id", "Value")
+	VALUES (10, 'Sales generator');INSERT INTO public."ContactSources"(
+	"Id", "Value")
+	VALUES (11, 'Online store');INSERT INTO public."ContactSources"(
+	"Id", "Value")
+	VALUES (12, 'Other');
+	
+	INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (1, 'Not selected');
+INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (2, 'Call');
+INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (3, 'Email');
+INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (4, 'Website');
+INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (5, 'Advertising');
+INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (6, 'Existing customer');
+INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (7, 'On recommendation');
+INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (8, 'Exhibition');
+INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (9, 'CRM form');
+INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (10, 'Callback');
+INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (11, 'Sales generator');
+INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (12, 'Internet-shop');
+INSERT INTO public."OperationSources"(
+	"Id", "Name")
+	VALUES (13, 'Other');
+	
+	INSERT INTO public."MeasurementUnits"(
+	"Id", "Name")
+	VALUES (1, ' Meter');
+     INSERT INTO public."MeasurementUnits"(
+	"Id", "Name")
+	VALUES (2, ' Liter');
+     INSERT INTO public."MeasurementUnits"(
+	"Id", "Name")
+	VALUES (3, ' Gram');
+     INSERT INTO public."MeasurementUnits"(
+	"Id", "Name")
+	VALUES (4, ' Kilogram');
+     INSERT INTO public."MeasurementUnits"(
+	"Id", "Name")
+	VALUES (5, ' Piece');
+	
+	INSERT INTO public."FieldOfActivities"(
+	"Id", "Name")
+	VALUES (1,  ' Not selected');
+INSERT INTO public."FieldOfActivities"(
+	"Id", "Name")
+	VALUES (2,  'Information Technology');
+INSERT INTO public."FieldOfActivities"(
+	"Id", "Name")
+	VALUES (3,  ' Telecommunications and communications');
+INSERT INTO public."FieldOfActivities"(
+	"Id", "Name")
+	VALUES (4,  'Production');
+INSERT INTO public."FieldOfActivities"(
+	"Id", "Name")
+	VALUES (5,  ' Banking services');
+INSERT INTO public."FieldOfActivities"(
+	"Id", "Name")
+	VALUES (6,  ' Consulting');
+INSERT INTO public."FieldOfActivities"(
+	"Id", "Name")
+	VALUES (7,  'Finances');
+INSERT INTO public."FieldOfActivities"(
+	"Id", "Name")
+	VALUES (8,  'Government');
+INSERT INTO public."FieldOfActivities"(
+	"Id", "Name")
+	VALUES (9,  'Delivery');
+INSERT INTO public."FieldOfActivities"(
+	"Id", "Name")
+	VALUES (10,  ' Entertainment');
+INSERT INTO public."FieldOfActivities"(
+	"Id", "Name")
+	VALUES (11,  ' Not for profit');
+INSERT INTO public."FieldOfActivities"(
+	"Id", "Name")
+	VALUES (12,  ' Other');
+

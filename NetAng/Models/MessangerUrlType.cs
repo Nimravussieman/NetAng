@@ -13,3 +13,16 @@ namespace NetAng.Models
         public string Name { get; set; }
     }
 }
+//Facebook
+//Telegram
+//ВКонтакті
+//Skype
+//Viber
+//Instagram
+//Бітрікс24.Network
+//Онлайн-чат
+//Відкрита лінія
+//ICQ
+//MSN/Live!
+//Jabber
+//Інший

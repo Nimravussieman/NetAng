@@ -10,15 +10,8 @@ namespace NetAng.Models
     {
         [Key]
         public int Id { get; set; }
-        [DataType(DataType.Url)]
+        //[DataType(DataType.Url)]
         public string Value { get; set; }
-        public UrlType UrlType { get; set; }
+        public string Type { get; set; }
     }
 }
-//public class Url
-//{       
-        //[Key]
-        //public int Id { get; set; }
-        //public Uri Link { get; set; }
-
-//}

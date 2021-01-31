@@ -11,8 +11,7 @@ namespace NetAng.Models
         [Key]
         public int Id { get; set; }
         public string Value { get; set; }
-        public string Description { get; set; }
-
-        public AddressType AddressType { get; set; }
+        //public string Description { get; set; }
+        public string Type { get; set; }
     }
 }
